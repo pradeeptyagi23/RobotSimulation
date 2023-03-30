@@ -37,3 +37,18 @@ Added below input validation
 ```SimulatedRobot```
 1. Check if ```update_position_callback``` is callable and not None in the constructor
 2. Check if waypoint, initial_position and position are a numy array
+
+SAMPLE OUTPUT
+```python
+Creating SimulatedRobot!
+Creating MissionController!
+Sending waypoint 0
+Commanding robot to move to [2. 0.]
+Sending waypoint 1
+Commanding robot to move to [3. 0.]
+Commanding robot to move to [2. 0.]
+Commanding robot to move to [3. 0.]
+Robot is now at [2. 0.]
+Robot is now at [3. 0.]
+Test complete
+```
