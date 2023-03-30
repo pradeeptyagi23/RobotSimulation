@@ -4,6 +4,7 @@ import time
 from threading import Thread,Lock
 
 import random
+import numpy as np
 
 class SimulatedRobot:
     """
@@ -18,6 +19,13 @@ class SimulatedRobot:
         - update_position_callback: A function that will be called when the robot's position is updated.
         """
         print("Creating SimulatedRobot!")
+
+        if not isinstance(initial_position, np.ndarray):
+            raise TypeError("initial_position must be a numpy array.")
+        
+        if update_position_callback is not None and not callable(update_position_callback):
+            raise TypeError("update_position_callback must be a callable function or None.")
+        
         self.position = initial_position
         self.update_position_callback = update_position_callback
 
@@ -37,6 +45,9 @@ class SimulatedRobot:
         Args:
         - waypoint: A numpy array representing the waypoint to which the robot should move.
         """
+        if not isinstance(waypoint, np.ndarray):
+            raise TypeError("waypoint must be a numpy array.")
+        
         print(f"Commanding robot to move to {waypoint}")
         Thread(target=self._update_position, args=(waypoint,)).start()
 
@@ -65,6 +76,9 @@ class SimulatedRobotWithCommunicationDelay:
         Args:
         - initial_position: A numpy array representing the robot's initial position.
         """
+        if not isinstance(initial_position, np.ndarray):
+            raise TypeError("initial_position must be a numpy array.")
+
         self.lock = Lock()
         self._robot = SimulatedRobot(initial_position, self.set_position)
         self.position = initial_position
@@ -85,6 +99,10 @@ class SimulatedRobotWithCommunicationDelay:
         Args:
         - waypoint: A numpy array representing the waypoint to which the robot should move.
         """
+
+        if not isinstance(waypoint, np.ndarray):
+            raise TypeError("waypoint must be a numpy array.")
+
         print(f"Commanding robot to move to {waypoint}")
         Thread(target=self._update_position_with_delay, args=(waypoint,)).start()
 
@@ -106,6 +124,9 @@ class SimulatedRobotWithCommunicationDelay:
         Args:
         - position: A numpy array representing the new position of the robot.
         """
+        if not isinstance(position, np.ndarray):
+            raise TypeError("Position must be a numpy array.")
+        
         Thread(target=self._update_position, args=(position,)).start()
 
     def _update_position(self, position):
